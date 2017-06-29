@@ -11,19 +11,12 @@ export default class SearchBar extends Component {
     }
   }
 
-  onChange = (e) => {
-    let state = this.state
-    state.query = e.target.value
-
-    this.setState(state)
-  }
-
   render () {
     return (
       <div className='search-bar'>
         <Row>
           <Col m={3} l={4} />
-          <Input s={12} m={6} l={4} label='Search' validate onChange={this.onChange} />
+          <Input s={12} m={6} l={4} label='Search' validate onChange={this.props.onChange} />
         </Row>
       </div>
     )

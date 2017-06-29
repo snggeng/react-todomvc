@@ -4,7 +4,7 @@ import './App.css'
 import uuidv4 from 'uuid/v4'
 import { Button, Row, Col, Input } from 'react-materialize'
 
-import SearchBar from '../SearchBar/SearchBar'
+// Import Components
 import TodoContent from '../TodoContent/TodoContent'
 
 class CreateTask extends Component {
@@ -80,7 +80,6 @@ class App extends Component {
           <img src={logo} className='App-logo' alt='logo' />
           <h2>My Todo List</h2>
         </div>
-        <SearchBar tasks={this.state.tasks} />
         <TodoContent tasks={this.state.tasks} />
         <CreateTask createTask={this.createTask} />
       </div>
