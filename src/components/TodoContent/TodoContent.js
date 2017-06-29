@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import { Button, Card, Row, Col, Input } from 'react-materialize'
+import { Card, Row, Col, Input } from 'react-materialize'
 
 class TodoItem extends Component {
   render () {
@@ -20,19 +20,33 @@ export default class TodoContent extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      task: ''
+      tasks: this.props.tasks
     }
   }
 
+  createTodos = () => {
+
+    let taskItems = [];
+
+    this.state.tasks.forEach((task, index) => {
+      taskItems.push(<TodoItem   task={task.task}
+                                   id={task.id}
+                                   key={task.id} />)
+    });
+
+  return taskItems;
+  }
+
   render () {
+    let todos = this.createTodos();
     return (
-      <div className='TodoContent'>TodoContent Component
-        <TodoItem task={this.state.task} />
+      <div className='TodoContent'>
+        {todos}
       </div>
     )
   }
 }
 
 TodoContent.propTypes = {
-  task: PropTypes.string.isRequired
+  tasks: PropTypes.array.isRequired
 }

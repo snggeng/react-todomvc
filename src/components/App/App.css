@@ -23,12 +23,8 @@
   to { transform: rotate(360deg); }
 }
 
-/*.TodoContent {
-
-}*/
-
 .TodoContent .item-col {
-  border: 1px solid black;
+  /*border: 1px solid black;*/
 }
 
 .TodoItem {
