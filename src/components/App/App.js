@@ -17,8 +17,9 @@ class CreateTask extends Component {
       id: uuidv4()
     }
   }
+
   onClick = (e) => {
-    console.log(e.target)
+    // create new Task Item, passing in the App's state
     this.props.createTask(this.state)
 
     this.setState({
@@ -28,18 +29,19 @@ class CreateTask extends Component {
   }
 
   onChange = (e) => {
-  let state = this.state
-  state.task = e.target.value
+    // Update state when input is entered
+    let state = this.state
+    state.task = e.target.value
 
-  this.setState(state)
-}
+    this.setState(state)
+  }
 
   render () {
     return (
       <div className='CreateTask'>
         <Row>
           <Col m={3} l={4} />
-          <Input s={12} m={6} l={4} label='Create New Task' onChange={this.onChange} />
+          <Input s={12} m={6} l={4} label='Create New Task' onChange={this.onChange} value={this.state.task}/>
         </Row>
         <Button onClick={this.onClick}>Add</Button>
       </div>
