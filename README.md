@@ -3,9 +3,12 @@ A simple to-do app made in React.js using react-materialize.
 
 ## To get started
 `git clone https://github.com/snggeng/react-todomvc.git react-todomvc`
-`cd react-todomvc`
-`yarn install`
-`yarn start`
+
+```
+cd react-todomvc
+yarn install
+yarn start
+```
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
