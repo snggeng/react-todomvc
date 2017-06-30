@@ -18,7 +18,8 @@ class TodoItem extends Component {
     this.state = {
       completed: this.props.completed,
       task: this.props.task,
-      id: this.props.id
+      id: this.props.id,
+      isChecked: this.props.isChecked
     }
   }
 
@@ -33,6 +34,7 @@ class TodoItem extends Component {
                    type='checkbox'
                    value='done'
                    label='Done'
+                   defaultChecked={this.state.isChecked}
                    className='filled-in'
                    onClick={this.props.selected} />
           </Col>
@@ -47,6 +49,7 @@ export default class TodoContent extends Component {
     super(props)
     this.state = {
       tasks: this.props.tasks,
+      unfilteredtasks: this.props.unfilteredtasks,
       query: ''
     }
   }
@@ -55,16 +58,19 @@ export default class TodoContent extends Component {
     //let task = e.target.parentNode.previousSibling.getElementsByClassName('card-content')[0].innerText
     console.log('before', this.state)
     let selectedTasks = this.props.tasks
+    let unfilteredtasks = this.props.unfilteredtasks
+    // set selected = true on click
     selectedTasks.forEach((el, index) => {
-      console.log('looping')
-      console.log('el', el.task)
+      console.log(el)
       if (el.task === e.target.id) {
         console.log('true')
         el.completed = true
+        el.isChecked = 'checked'
       }
     })
     this.setState({
-      tasks: selectedTasks
+      tasks: selectedTasks,
+      unfilteredtasks: selectedTasks // update unfiltered tasks with selected tasks
     }, () => {
       console.log('after', this.state)
     })
@@ -76,34 +82,17 @@ export default class TodoContent extends Component {
     let taskItems = [];
 
     this.props.tasks.forEach((task, index) => {
-      taskItems.push(<TodoItem task={task.task}
-                               completed={task.completed}
-                               selected={this.selected}
-                               id={task.id}
-                               key={task.id} />)
+      console.log(task.completed)
+        taskItems.push(
+          <TodoItem task={task.task}
+                    completed={task.completed}
+                    selected={this.selected}
+                    id={task.id}
+                    isChecked={task.isChecked}
+                    key={task.id} />)
     })
 
   return taskItems;
-  }
-
-  onChange = (e) => {
-    let originalState = this.props.tasks
-    let state = this.state
-    let filteredTasks
-    let queryText = e.target.value
-    // If user is searching, filter
-    if (queryText !== '') {
-      filteredTasks = this.state.tasks.filter((el) => {
-        return el.task.includes(queryText)
-      })
-    } else {
-      // else, return back to original state
-      filteredTasks = originalState
-    }
-
-    state.query = queryText
-    state.tasks = filteredTasks
-    this.setState(state)
   }
 
 
@@ -111,7 +100,7 @@ export default class TodoContent extends Component {
     let todos = this.createTodos();
     return (
       <div className='TodoContent'>
-        <SearchBar tasks={this.state.tasks} onChange={this.onChange}/>
+        <SearchBar tasks={this.state.tasks} onChange={this.props.handleSearch}/>
         {todos}
         {this.state.tasks.length > 0 &&
           <DeleteTasks deleteCompleted={this.props.deleteCompleted} />

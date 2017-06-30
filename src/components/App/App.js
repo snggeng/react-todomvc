@@ -54,7 +54,8 @@ class App extends Component {
     super(props);
 
     this.state = {
-      tasks: []
+      tasks: [],
+      unfilteredtasks: []
     }
   }
 
@@ -63,14 +64,16 @@ class App extends Component {
     newTask.task = task.task
     newTask.id = uuidv4()
     newTask.completed = false
+    newTask.isChecked = ''
 
     let tasks = this.state.tasks
     tasks.push(newTask)
-
-    console.log(tasks)
+    let unfilteredtasks = this.state.unfilteredtasks
+    unfilteredtasks.push(newTask)
 
     this.setState({
-      tasks: tasks
+      tasks: tasks,
+      unfilteredtasks: unfilteredtasks
     });
 
   }
@@ -78,12 +81,34 @@ class App extends Component {
   deleteCompleted = (e) => {
     let remainingTasks
     remainingTasks = this.state.tasks.filter((el) => {
-      console.log(el.completed)
       return el.completed === false
     })
     this.setState({
-      tasks: remainingTasks
+      tasks: remainingTasks,
+      unfilteredtasks: remainingTasks
     })
+  }
+
+  onChange = (e) => {
+    let originalState = this.state.unfilteredtasks
+    let state = this.state
+    let filteredTasks
+    let queryText = e.target.value
+    console.log(queryText)
+    // If user is searching, filter
+    if (queryText !== '') {
+      filteredTasks = this.state.tasks.filter((el) => {
+        console.log(el.task)
+        return el.task.includes(queryText)
+      })
+    } else {
+      // else, return back to original state
+      filteredTasks = originalState
+    }
+
+    state.query = queryText
+    state.tasks = filteredTasks
+    this.setState(state)
   }
 
   render () {
@@ -93,7 +118,7 @@ class App extends Component {
           <img src={logo} className='App-logo' alt='logo' />
           <h2>My Todo List</h2>
         </div>
-        <TodoContent tasks={this.state.tasks} deleteCompleted={this.deleteCompleted} />
+        <TodoContent tasks={this.state.tasks} unfilteredtasks={this.state.unfilteredtasks} deleteCompleted={this.deleteCompleted} handleSearch={this.onChange} />
         <CreateTask createTask={this.createTask} />
       </div>
     )
