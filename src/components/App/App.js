@@ -59,13 +59,13 @@ class App extends Component {
   }
 
   createTask = (task) => {
-    console.log(task)
-    let newTask = {};
-    newTask.task = task.task;
-    newTask.id = uuidv4();
+    let newTask = {}
+    newTask.task = task.task
+    newTask.id = uuidv4()
+    newTask.completed = false
 
-    let tasks = this.state.tasks;
-    tasks.push(newTask);
+    let tasks = this.state.tasks
+    tasks.push(newTask)
 
     console.log(tasks)
 
@@ -75,6 +75,17 @@ class App extends Component {
 
   }
 
+  deleteCompleted = (e) => {
+    let remainingTasks
+    remainingTasks = this.state.tasks.filter((el) => {
+      console.log(el.completed)
+      return el.completed === false
+    })
+    this.setState({
+      tasks: remainingTasks
+    })
+  }
+
   render () {
     return (
       <div className='App'>
@@ -82,7 +93,7 @@ class App extends Component {
           <img src={logo} className='App-logo' alt='logo' />
           <h2>My Todo List</h2>
         </div>
-        <TodoContent tasks={this.state.tasks} />
+        <TodoContent tasks={this.state.tasks} deleteCompleted={this.deleteCompleted} />
         <CreateTask createTask={this.createTask} />
       </div>
     )
