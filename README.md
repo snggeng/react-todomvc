@@ -2,9 +2,10 @@
 A simple to-do app made in React.js using react-materialize.
 
 ## To get started
-`git clone https://github.com/snggeng/react-todomvc.git react-todomvc`
+
 
 ```
+git clone https://github.com/snggeng/react-todomvc.git react-todomvc
 cd react-todomvc
 yarn install
 yarn start
